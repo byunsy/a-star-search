@@ -1,3 +1,9 @@
+"""============================================================================
+TITLE      : astar_colors.py
+AUTHOR     : Sang Yoon Byun
+DESCRIPTION: A set of colors (R, G, B) declared separately. 
+============================================================================"""
+
 # Declaring colors
 RED     = (255, 0, 0) 
 GREEN   = (0, 255, 0)
