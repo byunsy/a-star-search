@@ -2,7 +2,7 @@
 
 ## Description
 
-A-star-search is a simple program that visualizes the A* search algorithm using Pygame. Users can interact with the program by selecting a start point, end point, and various kinds of barriers to manipulate the 800x800 environment. Based on this environment, the program will then use the A* pathfinding algorithm to calculate a path with the shortest distance (Manhatten Distance) from the start point to the end point. The final path will be shown in purple, and users can reset the grid to begin a new search.
+A-star-search is a simple program that visualizes the A* search algorithm using Pygame. Users can interact with the program by selecting a start point, end point, and various kinds of barriers to manipulate the 800x800 environment. Based on this environment, the program will then use the A* pathfinding algorithm to calculate a path with the shortest distance (Manhattan Distance) from the start point to the end point. The final path will be shown in purple, and users can reset the grid to begin a new search.
 
 ## Basic Instructions
 
