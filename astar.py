@@ -25,7 +25,7 @@ screen_height = 800
 screen = pygame.display.set_mode((screen_width, screen_height))
 
 # Set screen title
-pygame.display.set_caption("A STAR PATHFINDER")
+pygame.display.set_caption("A Star Path Finder")
 
 """----------------------------------------------------------------------------
 1. SET UP NODE CLASS
@@ -148,6 +148,24 @@ def reconstruct_path(origin, current, draw):
 
 """----------------------------------------------------------------------------
 PROCEDURE:
+    destruct_path(grid)
+PARAMETERS:
+    grid, a grid composed of nodes (2d-array of nodes)
+PURPOSE:
+    Deletes the path drawn on the grid, if it exists
+PRODUCES:
+    none, a void function
+----------------------------------------------------------------------------"""
+def destruct_path(grid):
+
+    for row in grid:
+        for node in row:
+            if not node.is_barrier() and not node.is_start() and not node.is_end():
+                node.reset()
+
+
+"""----------------------------------------------------------------------------
+PROCEDURE:
     algorithm(draw, grid, start, end)
 PARAMETERS:
     draw, a lambda function explained in draw() function
@@ -186,9 +204,20 @@ def algorithm(draw, grid, start, end):
         open_set_hash_table.remove(current)
 
         if current == end:
-            reconstruct_path(origin, end, draw)
+            
+            for row in grid:
+                for node in row:
+                    if not node.is_barrier():
+                        node.reset()
+
             end.make_end()
             start.make_start()
+
+            reconstruct_path(origin, end, draw)
+
+            end.make_end()
+            start.make_start()
+
             return True
 
         for neighbor in current.neighbors:
@@ -359,6 +388,7 @@ def main(win, width):
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and start and end:
+                    destruct_path(grid)
                     for row in grid:
                         for node in row:
                             node.update_neighbors(grid)
