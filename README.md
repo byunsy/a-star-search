@@ -54,6 +54,10 @@ python astar.py
 
 ## Demonstrations
 
-Visualization of A\* search algorithm.
+A\* search algorithm finding the path with the shortest Manhattan Distance.
 
-![](images/astar1.gif)
+![](images/astar2.gif)
+
+Users can change the environment and restart the search to find a new path.
+
+![](images/astar3.gif)
