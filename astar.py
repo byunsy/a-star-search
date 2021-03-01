@@ -180,19 +180,27 @@ PRODUCES:
 ----------------------------------------------------------------------------"""
 def algorithm(draw, grid, start, end):
 
+    # just to keep track of 'when' each item were inserted (we can break ties)
     count = 0
 
+    # set of discovered nodes that should be considered for expansion
     open_set = PriorityQueue()
-    open_set.put((0, count, start))
+    open_set.put((0, count, start)) # start node with its f_score
 
-    origin = dict()
+    # origin[n] : the node immediately preceding n (in the cheapest path)
+    origin = {}
 
+    # g_score: cost of the cheapest path from start node to current node
+    g_score = {node: float("inf") for row in grid for node in row}
+    g_score[start] = 0
+    
+    # f_score: current best estimate of how short a path from start node
+    #          to end node can be if it goes through the current node.
+    # f_score = g_score[node] + h(node)  
     f_score = {node: float("inf") for row in grid for node in row}
     f_score[start] = h(start.get_coord(), end.get_coord())
 
-    g_score = {node: float("inf") for row in grid for node in row}
-    g_score[start] = 0
-
+    # to check if a specific node is in the queue
     open_set_hash_table = {start}
 
     while not open_set.empty():
