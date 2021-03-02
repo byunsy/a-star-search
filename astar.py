@@ -31,6 +31,12 @@ pygame.display.set_caption("A Star Path Finder")
 1. SET UP NODE CLASS
 ----------------------------------------------------------------------------"""
 class Node:
+    '''
+    Class: Node
+    An individual node that makes up the grid. Each node contains its own 
+    position values (x, y), status (color), neighbors (list of nodes) that 
+    allows the main algorithm to search for the cheapest path (Manhattan).
+    '''
 
     def __init__(self, row, col, width, total_rows):
         self.row = row
@@ -348,9 +354,12 @@ def get_clicked_coord(coord, rows, width):
                                      MAIN
 ----------------------------------------------------------------------------"""
 def main(win, width):
+
+    # Set the number of rows
     ROWS = 50
     grid = make_grid(ROWS, width)
 
+    # Initial status of start and end node
     start = None
     end = None
 
@@ -364,8 +373,8 @@ def main(win, width):
             if event.type == pygame.QUIT:
                 run = False
 
-            if pygame.mouse.get_pressed()[0]:   # LEFT CLICK
-
+            ### Left Click ------------------------------------------------ ###
+            if pygame.mouse.get_pressed()[0]:
                 coord = pygame.mouse.get_pos()
                 row, col = get_clicked_coord(coord, ROWS, width)
                 node = grid[row][col]
@@ -381,8 +390,8 @@ def main(win, width):
                 elif node != start and node != end:
                     node.make_barrier()
 
-            elif pygame.mouse.get_pressed()[2]: # RIGHT CLICK
-
+            ### Right Click ----------------------------------------------- ###
+            elif pygame.mouse.get_pressed()[2]:
                 coord = pygame.mouse.get_pos()
                 row, col = get_clicked_coord(coord, ROWS, width)
                 node = grid[row][col]
@@ -394,6 +403,7 @@ def main(win, width):
                 elif node == end:
                     end = None
 
+            ### Space and/or 'c' ------------------------------------------ ###
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and start and end:
                     destruct_path(grid)
