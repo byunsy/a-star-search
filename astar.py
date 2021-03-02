@@ -111,8 +111,6 @@ class Node:
         if self.col > 0 and not grid[self.row][self.col-1].is_barrier():
             self.neighbors.append(grid[self.row][self.col-1])
 
-    def __lt__(self, other):
-        return False
 
 """----------------------------------------------------------------------------
 PROCEDURE:
@@ -240,6 +238,8 @@ def algorithm(draw, grid, start, end):
             if temp_g_score < g_score[neighbor]:
                 origin[neighbor] = current
                 g_score[neighbor] = temp_g_score
+
+                # f_score = g_score[node] + h(node)  
                 f_score[neighbor] = temp_g_score + h(neighbor.get_coord(), end.get_coord())
 
                 if neighbor not in open_set_hash_table:
