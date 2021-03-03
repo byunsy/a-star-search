@@ -249,15 +249,17 @@ def algorithm(draw, grid, start, end):
                 # calculate f_score = g_score[node] + h(node)  
                 f_score[neighbor] = temp_g_score + h(neighbor.get_coord(), end.get_coord())
 
+                # if not in the queue 
                 if neighbor not in open_set_hashed:
                     count += 1
                     open_set.put((f_score[neighbor], count, neighbor))
                     open_set_hashed.add(neighbor)
                     neighbor.make_open()
-                    
+
         # draw and update the grid
         draw()
 
+        # display already-visited nodes (yellow) 
         if current != start:
             current.make_closed()
 
