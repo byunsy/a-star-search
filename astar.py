@@ -205,49 +205,57 @@ def algorithm(draw, grid, start, end):
     f_score[start] = h(start.get_coord(), end.get_coord())
 
     # to check if a specific node is in the queue
-    open_set_hash_table = {start}
+    open_set_hashed = {start}
 
     while not open_set.empty():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
 
+        # current: start node 
         current = open_set.get()[2]
-        open_set_hash_table.remove(current)
+        open_set_hashed.remove(current)
 
+        # If reached the end node ----------------------------------------- ###
         if current == end:
-            
+            # reset(make white) all except barriers
             for row in grid:
                 for node in row:
                     if not node.is_barrier():
                         node.reset()
 
+            # re-color the start and end node
             end.make_end()
             start.make_start()
 
+            # highlight the path found
             reconstruct_path(origin, end, draw)
 
+            # re-color the start and end node
             end.make_end()
             start.make_start()
 
             return True
 
+        # For all its neighbors ------------------------------------------- ###
         for neighbor in current.neighbors:
             temp_g_score = g_score[current] + 1
 
+            # if cheaper path, updated g_score[neighbor]
             if temp_g_score < g_score[neighbor]:
                 origin[neighbor] = current
                 g_score[neighbor] = temp_g_score
 
-                # f_score = g_score[node] + h(node)  
+                # calculate f_score = g_score[node] + h(node)  
                 f_score[neighbor] = temp_g_score + h(neighbor.get_coord(), end.get_coord())
 
-                if neighbor not in open_set_hash_table:
+                if neighbor not in open_set_hashed:
                     count += 1
                     open_set.put((f_score[neighbor], count, neighbor))
-                    open_set_hash_table.add(neighbor)
+                    open_set_hashed.add(neighbor)
                     neighbor.make_open()
-        
+                    
+        # draw and update the grid
         draw()
 
         if current != start:
